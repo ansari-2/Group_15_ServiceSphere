@@ -1,0 +1,35 @@
+<!-- provider_profile.html -->
+
+
+<div class="container">
+    <h1>Profile Details</h1>
+    <p>Name: {{ profile.username }}</p>
+    <p>Email: {{ profile.email }}</p>
+    <p>Date joined: {{ profile.date_joined }}</p>
+    <p>Last Login: {{ profile.last_login }}</p>
+
+    <!-- Additional profile fields -->
+
+    <h2>Accepted Bookings</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Service Name</th>
+                <th>User</th>
+                <th>Date & Time</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.service }}</td>
+                <td>{{ booking.user }}</td>
+                <td>{{ booking.date_time|date:"Y-m-d H:i" }}</td>
+                <td>{{ booking.service.description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+

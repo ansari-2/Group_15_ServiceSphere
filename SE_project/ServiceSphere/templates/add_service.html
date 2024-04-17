@@ -1,0 +1,79 @@
+<!-- add_service.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Service</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #f8f9fa;
+            padding-top: 20px;
+        }
+        .form-container {
+            margin: auto;
+            width: 50%;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .form-container h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add a New Service</h1>
+        <form method="post" id="serviceForm">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="serviceName" class="form-label">Service Name</label>
+                <input type="text" class="form-control" id="serviceName" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <input type="text" class="form-control" id="category" name="category" required>
+            </div>
+            <div class="mb-3">
+                <label for="serviceDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="serviceDescription" name="description" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="servicePrice" class="form-label">Price</label>
+                <input type="number" class="form-control" id="servicePrice" name="price" required min="0" step="0.01">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Service</button>
+        </form>
+    </div>
+
+    <!-- Include Bootstrap JS for modal support -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('serviceForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Stop the form from submitting normally
+            var formData = new FormData(this);
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}' // Ensure CSRF token is included if not using FormData
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Service added successfully!');
+                } else {
+                    alert('Failed to add service. Please check your inputs.');
+                }
+            })
+            .catch(error => {
+                alert('There was an error processing your request.');
+            });
+        });
+    </script>
+</body>
+</html>
