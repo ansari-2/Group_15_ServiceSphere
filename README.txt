@@ -1,3 +1,5 @@
+All changes are done on develop branch. Please switch to develop branch
+
 Install django on your local machine
 
 `pip Install django`
