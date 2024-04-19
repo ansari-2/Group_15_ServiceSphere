@@ -4,13 +4,18 @@ from .forms import *
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse
 from .models import *
+from django.http import JsonResponse
 
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect('login')
+            # Handle 'is_service_provider' logic here if needed
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors})
+
     else:
         form = UserRegisterForm()
     return render(request, 'register.html', {'form': form})
@@ -38,7 +43,7 @@ def user_login(request):
             else:
                 messages.error(request, 'Invalid username or password.')
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, 'Invalid username or password.')
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
@@ -60,11 +65,15 @@ def service_provider_dashboard(request):
 
 
 def search_services(request):
+  
     query = request.GET.get('query', '')
-    print(query)
-    services = Service.objects.filter(name=query) if query else Service.objects.all()
-    print(services)
-    return render(request, 'dashboard_user.html', {'services': services})
+    Fetched = True 
+    a = Service.objects.all()
+    print(query,'j')
+    services = [service for service in Service.objects.all() if service.name.lower().replace(' ','') == query.lower().replace(' ','')]
+    if services == [] and query == '':
+        Fetched = False
+    return render(request, 'dashboard_user.html', {'services': services,'fetched':Fetched})
 
 def book_service(request, service_id):
     service = Service.objects.get(pk=service_id)
@@ -101,9 +110,6 @@ def update_booking_status(request, booking_id, status):
         return redirect('home')
     
 def service_provider_profile(request):
-    if not request.user.is_authenticated or not request.user.is_service_provider:
-        return redirect('home')  # Redirect to home if not authorized or not a provider
-
     # Get all accepted bookings for the logged-in service provider
     services = Service.objects.filter(service_provider_id=request.user)
     accepted_bookings = []
@@ -111,18 +117,15 @@ def service_provider_profile(request):
         accepted_bookings.append(Booking.objects.filter(service_id=service,status=True))
     # Optional: Add profile information if stored separately
     profile = User.objects.filter(username=request.user)[0]
-    print(accepted_bookings[0][0].user)
+    status = 'Accepted'
     context = {
         'profile': profile,
-        'bookings': accepted_bookings[0]
+        'bookings': accepted_bookings[0],
+        'status':status
     }
     return render(request, 'provider_profile.html', context)
 
 
-
-
-from .forms import ServiceForm
-from django.http import JsonResponse
 
 def add_service(request):
     if request.method == 'POST':
@@ -138,3 +141,7 @@ def add_service(request):
     else:
         form = ServiceForm()
     return render(request, 'add_service.html', {'form': form})
+
+
+def home(request):
+    return render(request,'home.html')

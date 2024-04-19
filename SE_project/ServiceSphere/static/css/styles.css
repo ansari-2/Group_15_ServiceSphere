@@ -1,0 +1,28 @@
+.feature, .testimonial, .faq-item {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.feature img, .testimonial img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.faq-item h3 {
+    cursor: pointer;
+}
+
+.faq-item p {
+    display: none;
+    padding: 10px;
+}
+
+.testimonial cite {
+    display: block;
+    text-align: right;
+    color: #666;
+}

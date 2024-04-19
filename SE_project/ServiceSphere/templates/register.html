@@ -1,85 +1,179 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Service Sphere</title>
-    <!-- Bootstrap CSS for styling -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            padding-top: 40px;
-            padding-bottom: 40px;
-            background-color: #f5f5f5;
+            background-color: #f8f9fa; /* Lighter background for a clean look */
+            font-family: 'Arial', sans-serif; /* Ensures text is readable and professional */
+            padding-top: 80px; /* Space for navbar */
         }
-        .form-register {
-            width: 100%;
-            max-width: 330px;
-            padding: 15px;
-            margin: auto;
-            border: 1px solid #ced4da;
-            border-radius: .25rem;
-            background-color: #ffffff;
+        .container {
+            display: flex;
+            justify-content: center; /* Centers the form in the viewport */
         }
-        .form-register .form-floating {
-            margin-bottom: 10px;
+        .form-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px; /* Rounded borders for a softer look */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1); /* Soft shadow for depth */
+            width: 300px; /* Narrower width for a more modern appearance */
+            transition: all 0.3s ease; /* Smooth transition for hover effects */
         }
-        /* Custom style for the form inputs */
-        .form-register input[type="text"],
-        .form-register input[type="password"],
-        .form-register input[type="email"],
-        .form-register input[type="checkbox"] {
-            height: calc(3.5em + .75rem + 2px);
-            margin-bottom: 10px;
-            border: 1px solid #ced4da;
+        .form-container:hover {
+            box-shadow: 0 6px 25px rgba(0,0,0,0.2); /* More prominent shadow on hover */
         }
-        .form-register .btn {
-            height: calc(3em + .75rem + 2px);
+        .btn-primary {
+            background-color: #0056b3; /* A deeper blue for better contrast */
+            border-color: #004085;
         }
-        .form-register label {
-            margin-left: 0.5rem;
+        .btn-primary:hover {
+            background-color: #004085; /* Darker on hover for interactive feedback */
         }
-        .form-register .checkbox-label {
-            display: block;
-            margin-top: 0.5rem;
+        .form-check-input {
+            cursor: pointer; /* Indicates the element is interactable */
+        }
+        .form-check-label {
+            margin-left: 5px;
+            cursor: pointer;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        select {
+            font-size: 1.1em; /* Larger font size for easier readability */
+        }
+        body {
+            margin-top: 60px; /* Adjusted for fixed navbar */
+        }
+        .navbar-custom {
+            background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%); /* Gradient background */
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,.1); /* Subtle shadow for depth */
+        }
+        .navbar-brand img {
+            height: 45px; /* Logo height */
+        }
+        .navbar-toggler {
+            border-color: rgba(255,255,255,.1); /* Toggler icon border color */
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23FFF' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"); /* Custom color for toggler icon */
+        }
+        .nav-link {
+            color: white; /* White text for better contrast */
+            transition: color 0.3s; /* Smooth transition for hover effect */
+        }
+        .nav-link:hover,
+        .nav-link:focus {
+            color: #ccd; /* Lighter shade on hover/focus */
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-
-<div class="container col-md-6 offset-md-3 col-lg-4 offset-lg-4 mt-5">
-    <div class="form-register shadow-sm">
-        <form method="post" action="{% url 'register' %}">
-            {% csrf_token %}
-            <img class="mb-4" src="images/logo.png" alt="Service Sphere Logo" width="72" height="57">
-            <h1 class="h3 mb-3 fw-normal">Please register</h1>
-
-            {% for field in form %}
-                <div class="form-floating">
-                    <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}" placeholder="{{ field.label }}" name="{{ field.name }}" {% if field.is_required %}required{% endif %}>
-                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    {% if field.help_text %}
-                        <div class="form-text">{{ field.help_text }}</div>
-                    {% endif %}
-                    {% for error in field.errors %}
-                        <div class="alert alert-danger mt-2">{{ error }}</div>
-                    {% endfor %}
-                </div>
-            {% endfor %}
-
-            <div class="checkbox mb-3">
-                <label class="checkbox-label">
-                    <input type="checkbox" name="is_service_provider"> Is service provider
-                </label>
+    <nav class="navbar navbar-expand-md navbar-custom fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="{%static 'images/logo1.png'%}" alt="Service Sphere Logo" >
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a href="{% url 'home' %}" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'register' %}" class="nav-link">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'login' %}" class="nav-link">Login</a>
+                    </li>
+                    <!-- More links can be added here -->
+                </ul>
             </div>
-
-            <button class="btn btn-lg btn-primary w-100" type="submit">Register</button>
-            <p class="mt-5 mb-3 text-muted">&copy; 2022-2023</p>
+        </div>
+    </nav>
+<div class="container">
+    <div class="form-container">
+        <h2 class="text-center">Register</h2>
+        <form method="post" id="registrationForm" action="{% url 'register' %}">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-3">
+                {{ field.label_tag }}
+                {{ field }}
+                <!-- {% if field.help_text %}
+                <div class="form-text">{{ field.help_text }}</div>
+                {% endif %} -->
+                {% for error in field.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <!-- <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="is_service_provider"> Register as a Service Provider
+                </label>
+            </div> -->
+            <button type="submit" class="btn btn-primary w-100">Register</button>
         </form>
+    </div>
+</div>
+
+<!-- Modal for registration feedback -->
+<div class="modal fade" id="registrationFeedback" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="feedbackModalLabel">Registration Successful</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- The message will be injected here by JavaScript -->
+            </div>
+        </div>
     </div>
 </div>
 
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.getElementById('registrationForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const isServiceProvider = document.querySelector('input[name="is_service_provider"]').checked;
+    const formData = new FormData(this); // Collect all form data
+
+    // Perform your AJAX request here
+    fetch("{% url 'register' %}", {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Check response from the server
+        if (data.success) {
+            const modalBody = document.querySelector('#registrationFeedback .modal-body');
+            const feedbackModal = new bootstrap.Modal(document.getElementById('registrationFeedback'));
+            modalBody.textContent = isServiceProvider ? 'Registered as a Service Provider.' : 'Registered as a Service User.';
+            feedbackModal.show();
+        } else {
+            alert('Registration failed. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('There was a problem with your registration.');
+    });
+});
+
+</script>
 </body>
 </html>

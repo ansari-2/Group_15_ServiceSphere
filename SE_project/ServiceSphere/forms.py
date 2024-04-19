@@ -3,12 +3,11 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import *
 
 class UserRegisterForm(UserCreationForm):
-    is_service_provider = forms.BooleanField(required=False)
+    is_service_provider = forms.BooleanField(required=False, label='Register as a Service Provider')
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'is_service_provider']
-
+        fields = ['username', 'email', 'password1', 'password2']
 
 class BookingForm(forms.ModelForm):
     class Meta:

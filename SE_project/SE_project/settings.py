@@ -121,7 +121,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+# settings.py
+
+# At the bottom of your settings.py
+STATIC_URL = '/static/'
+
+# If you're in development mode, you might also need:
+import os
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'ServiceSphere/static'),
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
