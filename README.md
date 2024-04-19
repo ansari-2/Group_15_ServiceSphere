@@ -15,8 +15,6 @@ Panduga Raja Tejasvi Prasad
 ServiceSphere is an app that bridges the gap between the person who wants to offer the service and the person who wants the service. This platform allows the professionally skilled people to market their services by creating their profile on this platform where users or customers can directly interact with them to avail the services offered by the professional. People who are new to a place often get troubled due to the unavailability of basic services around them. By using this app they can avail different types of services with ease.
 
 # Architecture
-![Architecture diagram](https://drive.google.com/file/d/1UR7gl5ozkHstaR99sacem0cD84jV2OnH/view?usp=sharing)
-
 ![Architecture diagram](Demo/Architecture.jpg)
 
 # Installation
@@ -52,6 +50,7 @@ Activate environment
   <source src="Demo/Demo Group 15_serviceSphere.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
+
 
 
 
