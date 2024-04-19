@@ -17,7 +17,7 @@ ServiceSphere is an app that bridges the gap between the person who wants to off
 # Architecture
 ![Architecture diagram](https://drive.google.com/file/d/1UR7gl5ozkHstaR99sacem0cD84jV2OnH/view?usp=sharing)
 
-
+![Architecture diagram](Demo/Architecture.jpg)
 
 # Installation
 Install django on your local machine
@@ -47,6 +47,11 @@ Activate environment
 # Demo
 [Group 15 Service sphere demo](https://drive.google.com/file/d/1DWmbAlssI51a66Ksoxoc0qwRWSD_vlXQ/preview)
 
+
+<video width="320" height="240" controls>
+  <source src="Demo/Demo Group 15_serviceSphere.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 
 
